@@ -1,5 +1,5 @@
 \name{beta0}
-\Rdversion{1.6}
+\Rdversion{1.7}
 \alias{beta0}
 \title{
   Calculate the intercept of a logistic regression model, given a vector of log-odds ratio parameters and an overall prevalence.

@@ -1,5 +1,7 @@
-export(beta0, ccPower, ccSim, phaseI, plotPower, rmvhyper, tps, tpsPower, tpsSim)
+useDynLib(osDesign)
+export(beta0, ccPower, ccSim, phaseI, plotPower, rmvhyper, rXhyper, tps, tpsPower, tpsSim, hybdes, hybdesEco, enumerate, enumerate.count, logit, expit)
 
+S3method(summary, tps)
 S3method(print, tpsSim)
 S3method(print, ccSim)
 S3method(print, tpsPower)

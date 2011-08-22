@@ -1,5 +1,5 @@
 \name{ccPower}
-\Rdversion{1.6}
+\Rdversion{1.7}
 \alias{ccPower}
 \title{
 	Simulation-based estimation of power for the case-control design

@@ -1,5 +1,5 @@
 \name{phaseI}
-\Rdversion{1.6}
+\Rdversion{1.7}
 \alias{phaseI}
 \title{
 Expected phase I stratification

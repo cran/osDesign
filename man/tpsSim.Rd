@@ -1,5 +1,5 @@
 \name{tpsSim}
-\Rdversion{1.6}
+\Rdversion{1.7}
 \alias{tpsSim}
 \title{
 Simulation function for two-phase study designs.
@@ -238,8 +238,9 @@ ocCC}
 ## Illustration of setting where one of the covariates is continuous
 ##  * restrict to black and white children born in 2003
 ##  * dichotomize smoking, mothers age, weight gain during pregnancy and weight weight
-##  * note the use of 'etaTerms' to restrict to specific variables (the majority of which are created)
-##  * note the use of 'strata=list(2,3)' to simultaneously investigate stratification by
+##  * note the use of 'etaTerms' to restrict to specific variables 
+##    (the majority of which are created)
+##  * note the use of 'strata=list(11,12)' to simultaneously investigate stratification by
 ##     - 11th column in XM: derived 'smoker' variable
 ##     - 12th column in XM: derived 'teen' variable
 ##
@@ -259,7 +260,8 @@ infants$lowgain <- as.numeric(infants$gained < 20)
 infants$lbw     <- as.numeric(infants$weight < 2500)
 infants$weeks   <- (infants$weeks - 36) / 4              ## estimate a 4-week contrast
 ##
-fitM  <- glm(death ~ smoker + teen + race + male + lowgain + lbw + weeks, data=infants, family=binomial)
+fitM  <- glm(death ~ smoker + teen + race + male + lowgain + lbw + weeks, 
+data=infants, family=binomial)
 betaM <- fitM$coef
 XM    <- cbind(Int=1, infants)
 etaM  <- c("Int", "smoker", "teen", "race", "male", "lowgain", "lbw", "weeks")

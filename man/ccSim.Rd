@@ -1,5 +1,5 @@
 \name{ccSim}
-\Rdversion{1.6}
+\Rdversion{1.7}
 \alias{ccSim}
 \title{
 Simulation function for case-control study designs.

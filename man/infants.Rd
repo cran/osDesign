@@ -1,12 +1,13 @@
 \name{infants}
-\Rdversion{1.6}
+\Rdversion{1.7}
 \alias{infants}
 \docType{data}
 \title{
 Infant mortality data from North Carolina
 }
 \description{
-Individual-level infant mortality data on 235,272 births in the U.S. state of North Carolina, in 2003 and 2004.
+Individual-level infant mortality data on 235,272 births in the U.S. state 
+of North Carolina, in 2003 and 2004.
 }
 \usage{data(infants)}
 \format{
@@ -24,7 +25,8 @@ Individual-level infant mortality data on 235,272 births in the U.S. state of No
   }
 }
 \details{
-The data were compiled by the North Carolina State Center for Health Statistics (http://www.irss.unc.edu/).
+The data were compiled by the North Carolina State Center for Health 
+Statistics (http://www.irss.unc.edu/).
 
 The \code{race} variable is coded as follows:
   0 = Other non-white
@@ -49,7 +51,9 @@ infants$lowgain <- as.numeric(infants$gained < 20)
 infants$early   <- as.numeric(infants$weeks < 32)
 infants$lbw     <- as.numeric(infants$weight < 2500)
 ##
-listAgg <- list(year=infants$year, smoker=infants$smoker, teen=infants$teen, lowgain=infants$lowgain, race=infants$race, male=infants$male, early=infants$early, lbw=infants$lbw)
+listAgg <- list(year=infants$year, smoker=infants$smoker, teen=infants$teen, 
+lowgain=infants$lowgain, race=infants$race, male=infants$male, 
+early=infants$early, lbw=infants$lbw)
 infantsAgg <- aggregate(rep(1, nrow(infants)), listAgg, FUN=sum)
 names(infantsAgg)[ncol(infantsAgg)] <- "N"
 infantsAgg$Y <- aggregate(infants$death, listAgg, FUN=sum)$x}

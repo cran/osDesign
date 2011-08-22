@@ -1,5 +1,5 @@
 \name{rmvhyper}
-\Rdversion{1.6}
+\Rdversion{1.7}
 \alias{rmvhyper}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
@@ -31,6 +31,7 @@ Sebastien Haneuse
 ##
 rmvhyper(c(1000, 500, 200, 50), 200)
 
+\dontrun{
 ## Check the properties (first two moments) of the generated deviates
 ##
 M  <- 100
@@ -41,4 +42,5 @@ for(i in 1:nrow(temp)) temp[i,] <- rmvhyper(M*Qx, 1)
 ##
 rbind(Qx, apply(temp, 2,  mean))
 rbind(sqrt(Qx * (1-Qx)), apply(temp, 2, sd))
+}
 }

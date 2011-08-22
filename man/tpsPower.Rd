@@ -1,5 +1,5 @@
 \name{tpsPower}
-\Rdversion{1.6}
+\Rdversion{1.7}
 \alias{tpsPower}
 \title{
 	Simulation-based estimation of power for the two-phase study design

@@ -1,5 +1,5 @@
 \name{Ohio}
-\Rdversion{1.6}
+\Rdversion{1.7}
 \alias{Ohio}
 \docType{data}
 \title{
