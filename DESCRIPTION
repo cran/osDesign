@@ -1,7 +1,7 @@
 Package: osDesign
 Type: Package
 Title: Design and analysis of observational studies
-Version: 1.5
+Version: 1.6
 Date: 2011-08-22
 Author: Sebastien Haneuse, Takumi Saegusa, Nilanjan Chaterjee, Norman
         Breslow
@@ -15,6 +15,6 @@ Description: The osDesign serves for planning an observational study.
 Depends: R (>= 2.10)
 License: GPL (>= 3)
 LazyLoad: yes
-Packaged: 2011-08-23 18:27:02 UTC; sebastienhaneuse
+Packaged: 2012-05-23 17:19:53 UTC; sebastienhaneuse
 Repository: CRAN
-Date/Publication: 2011-08-24 09:55:57
+Date/Publication: 2012-05-23 21:27:48

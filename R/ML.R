@@ -16,14 +16,16 @@ function(nn0, nn1, x, N, case, group, cohort, alpha, maxiter = 100)
 	nobs <- length(case)
 	ncovs <- ncol(x)
 	stpmax <- 1 * (ncovs + nstrata)
-  u <- sort(unique(group))
-  strt.id <- outer(group,u,FUN="==")
-  strt.id <- matrix(as.numeric(strt.id),nrow=length(group),ncol=length(u))
+ ca<-case
+ co<-N-case
+ u <- sort(unique(group))
+ strt.id <- outer(group,u,FUN="==")
+ strt.id <- matrix(as.numeric(strt.id),nrow=length(group),ncol=length(u))
 	ee1 <- cbind(matrix(1, nstrata, 1), matrix(0, nstrata, nstrata))
 	ee2 <- cbind(matrix(0, nobs, 1), strt.id)
 	ee <- rbind(ee1, ee2)
-  n1 <- apply(strt.id * case, 2, sum)	
-	# n1= Phase II case sample sizes
+ n1 <- apply(strt.id * case, 2, sum)
+ # n1= Phase II case sample sizes
 	n0 <- apply(strt.id * (N - case), 2, sum)
 	#  n0 = phase II control sample sizes   
 	if((any(n0 == 0)) || (any(n1 == 0)))
@@ -39,30 +41,32 @@ function(nn0, nn1, x, N, case, group, cohort, alpha, maxiter = 100)
 	x <- cbind( - strt.id, x)	# Augmented covariate matrix
 	xx <- rbind(x0, x)
 	ofs <- log(n1a/n0a)
- 	ofs[1] <- ofs[1] - log(alpha)
+	ofs[1] <- ofs[1] - log(alpha)
 	if(cohort)
 		ofs[1] <- ofs[1] - log(nntot1/nntot0) + log(alpha)
 	ofs <- ofs[grpa]
 	repp <- c(nn1 + nn0, N)	# Augmented binomial denominator
-	m <- glm(cbind(yy, repp - yy) ~ -1 + xx + offset(ofs), family = binomial, x = TRUE, control = glm.control(epsilon = 9.9999999999999995e-07, maxit = 20))
+	m <- glm(cbind(yy, repp - yy) ~ -1 + xx + offset(ofs), family = binomial, x = TRUE, control = glm.control(epsilon = 1e-10, maxit = 100))
 	gamm.schill <- as.vector(m$coef)
 	gamm0 <- gamm <- gamm.schill	# Initialize by Schill's estimates
 	errcode <- 0
-	while((iter < maxiter) && (rerror > 9.9999999999999995e-07))
+	while((iter < maxiter) && (rerror > 1e-10))
 	{
 		#   cat("No of iterations=", iter, "\n")
 		l <- lagrange(gamm0, nstrata, nn1, nn0, n1a, n0a, grpa, repp, xx, ofs, yy)
 		h <- lagrad(gamm0, nstrata, nobs, ncovs, nn1, nn0, n1a, n0a, ee, repp, grpa, n0, n1, xx, ofs)
-		p <-  - solve(h) %*% l	# Newton's direction
+ 	p <-  - solve(h) %*% l	# Newton's direction
 		sp2 <- sqrt(sum(p^2))
+
 		if(sp2 > stpmax)
 			p <- p * (stpmax/sp2)	
 		# Scale if the attempted stepis too big
 		gamm <- lnsrch(gamm0, 0.5 * sum(l^2), t(h) %*% l, p, nstrata, nn1, nn0, n1a, n0a, grpa, repp, xx, ofs, yy)	
 		# Search for new value along the line of Newton's direction
 		rerror <- max(abs(gamm - gamm0)/pmax(abs(gamm0), 0.10000000000000001))
-		gamm0 <- gamm
-		iter <- iter + 1
+		gamm0 <- gamm  
+
+   iter <- iter + 1
 	}
 	if(iter < maxiter) converge <- TRUE	#cat("No of iterations=", iter, "\n")
 	h <- lagrad(gamm0, nstrata, nobs, ncovs, nn1, nn0, n1a, n0a, ee, repp, grpa, n0, n1, xx, ofs)
@@ -76,6 +80,21 @@ function(nn0, nn1, x, N, case, group, cohort, alpha, maxiter = 100)
 	qd1 <- n0a[grpa]
 	qd2 <- (1 - mu[grpa]) * (n1a[grpa] - na[grpa] * fvv)
 	q <- qn/(qd1 + qd2)
+	# 
+	# Verify constraints: equations (8) and (9) of Breslow and Holubkov
+	#qq <- q/na[grpa]
+	#h0 <- round(as.vector(t(qq)%*%ee), 10)
+	#h1 <- as.vector(round(t(n1a - na*t(ee)%*%(fvv*qq)),digits=4))
+	#print("Check that q's sum to 1 within strata")
+	#print(h0)
+	#print("Check that constraints for i=1 hold")
+	#print(h1)
+	##
+	#fail <- FALSE
+	#if(sum(h0 != 1) > 0) fail <- TRUE
+	#if(sum(h1 != 0) > 0) fail <- TRUE
+	#if(fail == TRUE) cat("\n WARNING: ML estimates don't satisfy appropriate constraints\n")
+	##
 	gg <- t(xx) %*% ((1 - fvv) * fvv * q * ee)
 	t00 <- (1 - fvv)^2 * q * ee
 	d00 <- rep.int(1, nrow(t00)) %*% t00
@@ -134,7 +153,57 @@ function(nn0, nn1, x, N, case, group, cohort, alpha, maxiter = 100)
 	delta <- gamm[1:nstrata]
 	b <- gamm[(nstrata + 1):(nstrata + ncovs)]
 	q <- q/na[grpa]
-	out <- list(coef = b, covm = cov1, cove = cov2, delta = delta, mu = mu)
+	
+	#validation of constraints, calculate h_ij from eq. (9) in Breslow and Holubkov
+	xx2<-xx[(nstrata+1):nrow(xx),]
+	pred<-xx2%*%gamm
+ help<-rep(0,nstrata)
+	for (i in 1:nstrata)
+	{
+	   k<-xx2[,i]
+    help[i]<--sum(k)
+	} 
+	help<-as.vector(help)
+	#help<-nrow(xx2)/nstrata
+ n1_new<-rep(n1,help)
+ n0_new<-rep(n0,help)
+ p1<-n1_new*exp(pred)/(n0_new+n1_new*exp(pred))
+ xx3<-xx[1:nstrata,]
+ pred2<-xx3%*%gamm
+ nntot0_new<-rep(nntot0,nstrata)
+ nntot1_new<-rep(nntot1,nstrata)
+ if(cohort)
+ {
+ P<-exp(pred2)/(1+exp(pred2))
+ }
+ else 
+ { 
+ P<-nntot1_new*exp(pred2)/(nntot0_new+nntot1_new*exp(pred2))
+ }
+ T<-nn1-(nn1+nn0)*P
+ T_new<-rep(T,help)
+ q<-N/(n0_new+n1_new)*n1_new*n0_new/(n0_new*n1_new+T_new*(n1_new-(n1_new+n0_new)*p1))
+ p0<-1-p1
+ h1<-rep(0,nstrata)
+ h0<-rep(0,nstrata)
+ start<-1
+ for (i in 1:nstrata)
+ {
+   sum_1<-0
+   sum_0<-0
+   end<-start+help[i]-1   
+     sum_1<-t(p1[start:end])%*%q[start:end]
+     sum_0<-t(p0[start:end])%*%q[start:end]
+   h1[i]<-n1[i]-(n1[i]+n0[i])*sum_1
+   h0[i]<-n0[i]-(n1[i]+n0[i])*sum_0
+   start<-start+help[i]
+ }
+ 
+#	out <- list(coef = b, covm = cov1, cove = cov2, delta = delta, mu = mu, h0=h0, h1=h1, k=k)
+	fail <- FALSE
+	if(sum(round(h0, 10) != 0) > 0) fail <- TRUE
+	if(sum(round(h1, 10) != 0) > 0) fail <- TRUE
+	if(fail == TRUE) cat("\n WARNING: ML estimates don't satisfy appropriate constraints\n\n")
+	out <- list(coef = b, covm = cov1, cove = cov2, delta = delta, mu = mu, fail = fail)
 	out
 }
-

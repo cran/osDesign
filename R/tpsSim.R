@@ -193,6 +193,16 @@ function(B=1000,
   	  nn0 <- tapply(Xexp$N0, Xexp$S, FUN=sum)
 	    nn1 <- tapply(Xexp$N1, Xexp$S, FUN=sum)
 
+			## Phase II sample sizes
+			##
+			#phIIconts <- nII0
+			#if(is.null(nII0)) phIIconts <- rep(round(nII[1]/K), K)
+			##
+			#phIIcases <- nII1
+			#if(is.null(nII1)) phIIconts <- rep(round(nII[2]/K), K)
+			
+			## Need an algorithm for re-distributing resources if the phase I cell count is insufficient
+
 			## Phase II data
 	   	##
 	    Xexp$n0 <- Xexp$N0
@@ -239,9 +249,12 @@ function(B=1000,
     	fitML <- try(tps(formTPS, XexpII, nn0=nn0, nn1=nn1, XexpII$S, method="ML", cohort=cohort), silent=TRUE)
 			if(class(fitML)[1] == "tps")
 			{
-				betaHat[b,index,]  <- fitML$coef
-				seHat[b,index,]    <- sqrt(diag(fitML$covm))
-				waldTest[b,index,] <- abs(fitML$coef/sqrt(diag(fitML$covm))) > abs(qnorm(alpha/2))
+				## only retain results if "fail == FALSE" (i.e., the phase I and phase II constraints were satisfied)
+				if(fitML$fail == FALSE){
+					betaHat[b,index,]  <- fitML$coef
+					seHat[b,index,]    <- sqrt(diag(fitML$covm))
+					waldTest[b,index,] <- abs(fitML$coef/sqrt(diag(fitML$covm))) > abs(qnorm(alpha/2))
+				}
 			}
 		}
 	}
@@ -295,4 +308,3 @@ function(B=1000,
   class(value) <- "tpsSim"
   return(value)
 }
-

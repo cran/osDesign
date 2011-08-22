@@ -3,16 +3,22 @@ function(beta0,
 											betaX,
 											X,
 											N,
-											rhoY)
+											rhoY,
+											expandX)
 {
 	##
-  designX <- X[,1]
-  for(i in 2:ncol(X))
+	if(expandX == "none") designX <- X
+  ##
+  if(expandX == "all")
   {
-    for(j in 1:max(X[,i]))
-    {
-    	designX <- cbind(designX, as.numeric(X[,i] == j))
-    }
+	  designX <- X[,1]
+  	for(i in 2:ncol(X))
+  	{
+    	for(j in 1:max(X[,i]))
+    	{
+    		designX <- cbind(designX, as.numeric(X[,i] == j))
+    	}
+  	}
   }
   
   ##
@@ -22,4 +28,3 @@ function(beta0,
   value <- abs(sum(expit(etaY) * (N/sum(N))) - rhoY)
   return(value)
 }
-

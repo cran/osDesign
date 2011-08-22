@@ -1,5 +1,5 @@
 \name{infants}
-\Rdversion{1.5}
+\Rdversion{1.6}
 \alias{infants}
 \docType{data}
 \title{

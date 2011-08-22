@@ -7,4 +7,3 @@ function(x,y)
 	z <- x[,rep(1:ncol(x),rep(ncol(y),ncol(x)))]*y[,rep(1:ncol(y),ncol(x))]
 	z
 }
-

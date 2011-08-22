@@ -138,4 +138,3 @@ function(B=1000,
   class(value) <- "ccSim"
   return(value)
 }
-

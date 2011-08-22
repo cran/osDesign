@@ -21,4 +21,3 @@ function(waldTest,
   ##
   return(value)
 }
-

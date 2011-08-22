@@ -1,5 +1,5 @@
 \name{Ohio}
-\Rdversion{1.5}
+\Rdversion{1.6}
 \alias{Ohio}
 \docType{data}
 \title{
@@ -24,6 +24,7 @@ The data were obtained from the National Center for Heatlh Statistics Compressed
 }
 \source{
 Xia H, Carlin B (1998). Spatio-temporal models with errors in covariates: Mapping Ohio lung cancer mortality. Statistics in Medicine, 17, 2025-2043.
+
 Haneuse, S. and Saegusa, T. and Lumley, T. (2011) "osDesign: An R Package for the Analysis, Evaluation, and Design of Two-Phase and Case-Control Studies." Journal of Statistical Software, 43(11), 1-29.
 }
 \keyword{datasets}

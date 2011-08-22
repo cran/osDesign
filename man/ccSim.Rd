@@ -1,5 +1,5 @@
 \name{ccSim}
-\Rdversion{1.5}
+\Rdversion{1.6}
 \alias{ccSim}
 \title{
 Simulation function for case-control study designs.
@@ -135,6 +135,7 @@ Also returned is an object \code{failed} which is a vector consisting of the num
 }
 \references{
 Prentice, R. and Pyke, R. (1979) "Logistic disease incidence models and case-control studies." Biometrika 66:403-411.
+
 Haneuse, S. and Saegusa, T. and Lumley, T. (2011) "osDesign: An R Package for the Analysis, Evaluation, and Design of Two-Phase and Case-Control Studies." Journal of Statistical Software, 43(11), 1-29.
 }
 \author{

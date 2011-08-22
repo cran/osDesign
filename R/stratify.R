@@ -30,4 +30,3 @@ function(X, strata=NULL)
 	##
 	return(value)
 }
-

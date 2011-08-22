@@ -36,4 +36,3 @@ function(object, ...)
 	}
 	structure(list(coefficients = coefficients), class = "summary.tps")
 }
-

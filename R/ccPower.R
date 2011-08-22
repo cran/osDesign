@@ -120,4 +120,3 @@ function(B=1000,
   class(value) <- "ccPower"
   return(value)
 }
-

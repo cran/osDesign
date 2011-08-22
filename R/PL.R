@@ -55,6 +55,5 @@ function(nn0, nn1, x, N, case, group, cohort, alpha)
 	cove <- cov %*% (ghate + aba) %*% cov	
 	# Model based variance-covariance matrix
 	covm <- cov %*% (ghat + aba) %*% cov
-	return(list(coef = m$coef, covm = covm, cove = cove))
+	return(list(coef = m$coef, covm = covm, cove = cove, fail = FALSE))
 }
-

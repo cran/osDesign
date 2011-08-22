@@ -1,5 +1,5 @@
 \name{tpsSim}
-\Rdversion{1.5}
+\Rdversion{1.6}
 \alias{tpsSim}
 \title{
 Simulation function for two-phase study designs.
@@ -110,6 +110,8 @@ characteristics of various designs/estimators for \code{betaTruth}:
   
   When evaluating operating characteristics, some simulated datasets may result in unusually large or small estimates. Particularly, when the the case-control/phase II sample sizes are small. In some settings, it may be desirable to truncate the Monte Carlo sampling distribution prior to evaluating operating characteristics. The \code{threshold} argument indicates the interval beyond which point estimates are ignored. The default is such that all \code{B} datasets are kept.
 
+NOTE: In some settings, the current implementation of the ML estimator returns point estimates that do not satisfy the phase I and/or phase II constraints. If this is the case a warning is printed and the "fail" elements of the returned list is set to TRUE. An example of this is phenomenon is given the help file for \code{\link{tps}}. When this occurs, \code{tpsSim()} considers ML estimation for the particular dataset to have failed.
+
 }
 \value{
   \code{tpsSim()} returns an object of class "tpsSim", a list containing all the input arguments, as well list \code{results} with the following components:
@@ -158,14 +160,16 @@ characteristics of various designs/estimators for \code{betaTruth}:
     	distribution for each estimator to the standard deviation of the Monte Carlo sampling distribution
     	for the estimator corresponding to \code{refDesign}. The ratio is multiplied by 100.
     }
-Also returned is an object \code{failed} which is a vector consisting of the number of datasets excluded from the power calculations (i.e. set to \code{NA}), for each simulation performed. For the evaluation of general operating characteristics, the three reasons are: (1) lack of convergence indicated by \code{NA} point estimates returned by \code{\link{glm}} or \code{\link{tps}}, (2) lack of convergence indicated by \code{NA} standard error point estimates returned by \code{\link{glm}} or \code{\link{tps}}, (3) exclusion on the basis of the \code{threshold} argument.
+Also returned is an object \code{failed} which is a vector consisting of the number of datasets excluded from the power calculations (i.e. set to \code{NA}), for each simulation performed. For the evaluation of general operating characteristics, the four reasons are: (1) lack of convergence indicated by \code{NA} point estimates returned by \code{\link{glm}} or \code{\link{tps}}; (2) lack of convergence indicated by \code{NA} standard error point estimates returned by \code{\link{glm}} or \code{\link{tps}}; (3) exclusion on the basis of the \code{threshold} argument; and (4) for the ML estimator only, the phase I and/or phase II constraints are not satisfied.
 }
 \note{
 	A generic print method provides formatted output of the results.
 }
 \references{
 Prentice, R. and Pyke, R. (1979) "Logistic disease incidence models and case-control studies." Biometrika 66:403-411.
+
 Breslow, N. and Chatterjee, N. (1999) "Design and analysis of two phase studies with binary outcome applied to Wilms tumour prognosis." Applied Statistics 48:457-468.
+
 Haneuse, S. and Saegusa, T. and Lumley, T. (2011) "osDesign: An R Package for the Analysis, Evaluation, and Design of Two-Phase and Case-Control Studies." Journal of Statistical Software, 43(11), 1-29.
 }
 \author{

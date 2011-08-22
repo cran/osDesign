@@ -36,4 +36,3 @@ function(X, expandX="all")
 	##
 	return(value)
 }
-

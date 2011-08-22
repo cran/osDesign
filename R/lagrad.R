@@ -30,4 +30,3 @@ function(gamm0, nstrata, nobs , ncovs ,nn1 , nn0 , n1a , n0a ,ee ,repp , grpa , 
 	g <- g - fv
 	g
 }
-

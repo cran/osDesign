@@ -1,5 +1,5 @@
 \name{tps}
-\Rdversion{1.5}
+\Rdversion{1.6}
 \alias{tps}
 \title{
 	Estimation for two-phase designs.
@@ -57,22 +57,33 @@ corresponding outcome X stratum cell. This estimator has its origins in sampling
 of conditional probabilities of "being a case" given the covariates and the fact of inclusion in the phase II sample. This is  called the "complete data likelihood" by some
 researchers. The estimate is obtained by fitting a logistic regression model to the phase II data with a set of offsets. The ML procedure maximizes the full likelihood of
 the data (phase I and II) jointly with respect to the regression parameters and the marginal distribution of the covariates. The resulting concentrated score equations
-(Breslow and Holubkov (1997) , eq. 18 ) were solved using a modified Newton-Raphson algorithm. Schill's (1993) partial likelihood estimates are used as the starting values.
+(Breslow and Holubkov (1997) , eq. 18) were solved using a modified Newton-Raphson algorithm. Schill's (1993) partial likelihood estimates are used as the starting values.
+
+NOTE: In some settings, the current implementation of the ML estimator returns point estimates that do not satisfy the phase I and/or phase II constraints. If this is the case a warning is printed and the "fail" elements of the returned list is set to TRUE. An example of this is phenomenon is given below. When this occurs, users are encouraged to either report the PL estimator or consider using Chris Wild's "missreg" package.
+
 }
 \value{
-	\code{tps()} returns a list estimated regression coefficients and one or two estimates of their asymptotic variance-covariance matrix:
+	\code{tps()} returns a list that includes estimated regression coefficients and one or two estimates of their asymptotic variance-covariance matrix:
 	\item{coef}{Regression coefficient estimates}
 	\item{covm}{Model based variance-covariance matrix. This is available for \code{method} = "PL" and "ML".}
 	\item{cove}{Empirical variance-covariance matrix. This is available for all the three methods.}
+	\item{fail}{Indicator of whether or not the phase I and/or the phase II constraints are satisfied; only relevant for the ML estimator.}
 }
 \references{
 Flanders W. and Greenland S. (1991) "Analytic methods for two-stage case-control studies and other stratified designs." Statistics in Medicine 10:739-747.
+
 Zhao L. and Lipsitz S. (1992) "Design and analysis of two-stage studies."Statistics in Medicine 11:769-782.
+
 Schill, W., Jockel K-H., Drescher, K. and Timm, J.(1993). "Logistic analysis in case-control studies under validation sampling." Biometrika 80:339-352.
+
 Scott, A. and Wild, C. (1997) "Fitting regression models to case control data by maximum likelihood." Biometrika 78:705-717.
+
 Breslow, N. and Holubkov, R. (1997) "Maximum likelihood estimation for logistic regression parameters under two-phase, outcome dependent sampling." J. Roy. Statist. Soc. B. 59:447-461.
+
 Breslow, N. and Cain, K. (1988) "Logistic regression for two-stage case control data." Biometrika 75:11-20.
+
 Breslow, N. and Chatterjee, N. (1999) "Design and analysis of two phase studies with binary outcome applied to Wilms tumour prognosis." Applied Statistics 48:457-468.
+
 Haneuse, S. and Saegusa, T. and Lumley, T. (2011) "osDesign: An R Package for the Analysis, Evaluation, and Design of Two-Phase and Case-Control Studies." Journal of Statistical Software, 43(11), 1-29.
 }
 \author{
@@ -117,6 +128,11 @@ tps(cbind(cases, conts) ~ factor(Age) + Sex + Race, data=Ohio, nn0=nn0,
 tps(cbind(cases, conts) ~ factor(Age) + Sex + Race, data=Ohio, nn0=nn0,
     nn1=nn1, group=Ohio$S, method="PL")
 tps(cbind(cases, conts) ~ factor(Age) + Sex + Race, data=Ohio, nn0=nn0,
+    nn1=nn1, group=Ohio$S, method="ML")
+
+## An example where (most of the time) the constraints are not satisfied and a warning is returned
+##
+tps(cbind(cases, conts) ~ Sex + Race, data=Ohio, nn0=nn0,
     nn1=nn1, group=Ohio$S, method="ML")
 }
 

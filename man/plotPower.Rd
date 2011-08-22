@@ -1,5 +1,5 @@
 \name{plotPower}
-\Rdversion{1.5}
+\Rdversion{1.6}
 \alias{plotPower}
 \title{
   Plot function for power, based on two-phase and case-control design

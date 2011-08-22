@@ -154,7 +154,10 @@ function(B=1000,
 			index <- 1 + i + (3*lenII)
     	fitML <- try(tps(formTPS, XexpII, nn0=nn0, nn1=nn1, XexpII$S, method="ML", cohort=cohort), silent=TRUE)
 			if(class(fitML)[1] == "tps")
-				waldTest[b,index,] <- abs(fitML$coef/sqrt(diag(fitML$covm))) > abs(qnorm(alpha/2))
+			{
+				## only retain results if "fail == FALSE" (i.e., the phase I and phase II constraints were satisfied)
+				if(fitML$fail == FALSE) waldTest[b,index,] <- abs(fitML$coef/sqrt(diag(fitML$covm))) > abs(qnorm(alpha/2))
+			}
 		}
 	}
 	
@@ -201,4 +204,3 @@ function(B=1000,
   class(value) <- "tpsPower"
   return(value)
 }
-

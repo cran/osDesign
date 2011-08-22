@@ -1,14 +1,14 @@
 \name{beta0}
-\Rdversion{1.5}
+\Rdversion{1.6}
 \alias{beta0}
 \title{
   Calculate the intercept of a logistic regression model, given a vector of log-odds ratio parameters and an overall prevalence.
 }
 \description{
-When conducting power calculations, one is often interested in examining power for various 'effect sizes'. Suppose the logistic regression is specified via the vector of coefficients (\code{beta0}, \code{betaX}); the first element is the intercept and the second consists of a vector of log odds ratio parameters. In many settings, the overall outcome prevalence in the population of interest is known or, at least, fixed. Modifying any given element of \code{betaX} will automatically modify the overall prevalence, unless there is a corresponding change in \code{beta0}. The function \code{beta0()} calculates the value of \code{beta0} that minimizes the difference between the target outcome prevalence, \code{rhoY}, and prevalence induced by the model (in conjuction with the assumed marginal exposure distribution.
+When conducting power calculations, one is often interested in examining power for various 'effect sizes'. Suppose the logistic regression is specified via the vector of coefficients (\code{beta0}, \code{betaX}); the first element is the intercept and the second consists of a vector of log odds ratio parameters. In many settings, the overall outcome prevalence in the population of interest is known or, at least, fixed. Modifying any given element of \code{betaX} will automatically modify the overall prevalence, unless there is a corresponding change in \code{beta0}. The function \code{beta0()} calculates the value of \code{beta0} that minimizes the difference between the target outcome prevalence, \code{rhoY}, and prevalence induced by the model in conjuction with the assumed marginal exposure distribution.
 }
 \usage{
-beta0(betaX, X, N, rhoY)
+beta0(betaX, X, N, rhoY, expandX="all")
 }
 \arguments{
   \item{betaX}{
@@ -23,6 +23,9 @@ beta0(betaX, X, N, rhoY)
   \item{rhoY}{
     Target outcome prevalence in the population.
 }
+  \item{expandX}{
+    Character vector indicating which columns of \code{X} to expand as a series of dummy variables. Useful when at least one exposure is continuous (and should not be expanded). Default is `all'; the other option is `none' or character vector of column names.
+  }
 }
 \details{
 	The minimization is performed using the \code{\link{optimize}} function.

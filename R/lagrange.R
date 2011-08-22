@@ -14,4 +14,3 @@ function(gamm0, nstrata , nn1 , nn0, n1a , n0a , grpa ,repp , xx , ofs , yy)
 	g  <- t(xx)%*%((1-g)*yy - g*(repp-yy)) 
 	g
 }
-

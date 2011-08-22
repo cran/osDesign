@@ -22,4 +22,3 @@ function(gamm0,f0,g0,p,nstrata,nn1,nn0,n1a,n0a,grpa,repp,xx,ofs,yy)
 	}
 	gamm
 }
-

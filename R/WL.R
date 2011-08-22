@@ -58,7 +58,6 @@ function(nn0, nn1, x, N, case, group, cohort, alpha)
 	if(!cohort)
 		cove <- cove - uj0 %*% bb0 %*% t(uj0) - uj1 %*% bb1 %*% t(uj1)
 	cove <- cov %*% cove %*% cov
-	z <- list(coef = m$coef, cove = cove)
+	z <- list(coef = m$coef, cove = cove, fail = FALSE)
 	z
 }
-

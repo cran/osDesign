@@ -1,5 +1,5 @@
 \name{tpsPower}
-\Rdversion{1.5}
+\Rdversion{1.6}
 \alias{tpsPower}
 \title{
 	Simulation-based estimation of power for the two-phase study design
@@ -72,13 +72,16 @@ of \code{beta}:
 }
 The overall simulation approach is the same as that described in \code{\link{tpsSim}}.
 
-In each case, power is estimated as the proportion of simulated datasets for which a hypothesis test of no effect is rejected.
+  In each case, power is estimated as the proportion of simulated datasets for which a hypothesis test of no effect is rejected.
 
   The correspondence between \code{betaTruth} and \code{X}, specifically the ordering of elements, is based on successive use of \code{\link{factor}} to each column of \code{X} which is expanded via the \code{expandX} argument. Each exposure that is expanded must conform to a {0, 1, 2, ...} integer-based coding convention.
   
   The \code{etaTerms} argument is useful when only certain columns in \code{X} are to be included in the model. In the context of the two-phase design, this might be the case if phase I stratifies on some surrogate exposure and a more detailed/accurate measure is to be included in the main model.
 
 Only balanced designs are considered by \code{tpsPower()}. For unbalanced designs, power estimates can be obtained from \code{\link{tpsSim}}.
+
+NOTE: In some settings, the current implementation of the ML estimator returns point estimates that do not satisfy the phase I and/or phase II constraints. If this is the case a warning is printed and the "fail" elements of the returned list is set to TRUE. An example of this is phenomenon is given the help file for \code{\link{tps}}. When this occurs, \code{tpsPower()} considers ML estimation for the particular dataset to have failed.
+
 }
 \value{
   \code{tpsPower()} returns an object of class "tpsPower", a list containing all the input arguments, as well as the following components:
@@ -86,7 +89,7 @@ Only balanced designs are considered by \code{tpsPower()}. For unbalanced design
     	Power against the null hypothesis that the regression coefficient is zero for a Wald-based test with an \code{alpha} type I error rate.
     }
     \item{failed}{
-    	A vector consisting of the number of datasets excluded from the power calculations (i.e. set to \code{NA}), for each simulation performed. For power calculations, the two reasons are: (1) lack of convergence indicated by \code{NA} point estimates returned by \code{\link{glm}} or \code{\link{tps}}, (2) lack of convergence indicated by \code{NA} standard error point estimates returned by \code{\link{glm}} or \code{\link{tps}}.
+    	A vector consisting of the number of datasets excluded from the power calculations (i.e. set to \code{NA}), for each simulation performed. For power calculations, the three reasons are: (1) lack of convergence indicated by \code{NA} point estimates returned by \code{\link{glm}} or \code{\link{tps}}; (2) lack of convergence indicated by \code{NA} standard error point estimates returned by \code{\link{glm}} or \code{\link{tps}}; and (3) for the ML estimator only, the phase I and/or phase II constraints are not satisfied.
     }
 }
 \note{
@@ -96,7 +99,9 @@ Only balanced designs are considered by \code{tpsPower()}. For unbalanced design
 }
 \references{
 Prentice, R. and Pyke, R. (1979) "Logistic disease incidence models and case-control studies." Biometrika 66:403-411.
+
 Breslow, N. and Chatterjee, N. (1999) "Design and analysis of two phase studies with binary outcome applied to Wilms tumour prognosis." Applied Statistics 48:457-468.
+
 Haneuse, S. and Saegusa, T. and Lumley, T. (2011) "osDesign: An R Package for the Analysis, Evaluation, and Design of Two-Phase and Case-Control Studies." Journal of Statistical Software, 43(11), 1-29.
 }
 \author{
