@@ -1,5 +1,5 @@
 \name{tps}
-\Rdversion{1.4}
+\Rdversion{1.5}
 \alias{tps}
 \title{
 	Estimation for two-phase designs.
@@ -67,18 +67,13 @@ the data (phase I and II) jointly with respect to the regression parameters and 
 }
 \references{
 Flanders W. and Greenland S. (1991) "Analytic methods for two-stage case-control studies and other stratified designs." Statistics in Medicine 10:739-747.
-
 Zhao L. and Lipsitz S. (1992) "Design and analysis of two-stage studies."Statistics in Medicine 11:769-782.
-
 Schill, W., Jockel K-H., Drescher, K. and Timm, J.(1993). "Logistic analysis in case-control studies under validation sampling." Biometrika 80:339-352.
-
 Scott, A. and Wild, C. (1997) "Fitting regression models to case control data by maximum likelihood." Biometrika 78:705-717.
-
 Breslow, N. and Holubkov, R. (1997) "Maximum likelihood estimation for logistic regression parameters under two-phase, outcome dependent sampling." J. Roy. Statist. Soc. B. 59:447-461.
-
 Breslow, N. and Cain, K. (1988) "Logistic regression for two-stage case control data." Biometrika 75:11-20.
-
 Breslow, N. and Chatterjee, N. (1999) "Design and analysis of two phase studies with binary outcome applied to Wilms tumour prognosis." Applied Statistics 48:457-468.
+Haneuse, S. and Saegusa, T. and Lumley, T. (2011) "osDesign: An R Package for the Analysis, Evaluation, and Design of Two-Phase and Case-Control Studies." Journal of Statistical Software, 43(11), 1-29.
 }
 \author{
   Nilanjan Chaterjee, Norman Breslow, Sebastien Haneuse

@@ -1,8 +1,8 @@
 Package: osDesign
 Type: Package
 Title: Design and analysis of observational studies
-Version: 1.4
-Date: 2011-07-25
+Version: 1.5
+Date: 2011-08-22
 Author: Sebastien Haneuse, Takumi Saegusa, Nilanjan Chaterjee, Norman
         Breslow
 Maintainer: Sebastien Haneuse <shaneuse@hsph.harvard.edu>
@@ -12,8 +12,9 @@ Description: The osDesign serves for planning an observational study.
         Carlo based evaluation of operating characteristics such as
         powers for estimators of the components of a logistic
         regression model.
+Depends: R (>= 2.10)
 License: GPL (>= 3)
 LazyLoad: yes
-Packaged: 2011-07-25 17:21:45 UTC; sebastienhaneuse
+Packaged: 2011-08-23 18:27:02 UTC; sebastienhaneuse
 Repository: CRAN
-Date/Publication: 2011-07-25 20:18:51
+Date/Publication: 2011-08-24 09:55:57

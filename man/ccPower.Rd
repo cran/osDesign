@@ -1,5 +1,5 @@
 \name{ccPower}
-\Rdversion{1.4}
+\Rdversion{1.5}
 \alias{ccPower}
 \title{
 	Simulation-based estimation of power for the case-control design
@@ -77,7 +77,8 @@ ccPower(B=1000, betaTruth, X, N, expandX="all", etaTerms=NULL,
 	A generic plot function \code{\link{plotPower}} provides plots of powers against different sample sizes for each estimate of a regression coefficient.
 }
 \references{
-  Prentice, R. and Pyke, R. (1979) "Logistic disease incidence models and case-control studies." Biometrika 66:403-411.
+Prentice, R. and Pyke, R. (1979) "Logistic disease incidence models and case-control studies." Biometrika 66:403-411.
+Haneuse, S. and Saegusa, T. and Lumley, T. (2011) "osDesign: An R Package for the Analysis, Evaluation, and Design of Two-Phase and Case-Control Studies." Journal of Statistical Software, 43(11), 1-29.
 }
 \author{
   Sebastien Haneuse, Takumi Saegusa

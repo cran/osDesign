@@ -1,5 +1,5 @@
 \name{infants}
-\Rdversion{1.4}
+\Rdversion{1.5}
 \alias{infants}
 \docType{data}
 \title{
@@ -8,7 +8,7 @@ Infant mortality data from North Carolina
 \description{
 Individual-level infant mortality data on 235,272 births in the U.S. state of North Carolina, in 2003 and 2004.
 }
-\usage{data(Ohio)}
+\usage{data(infants)}
 \format{
   A data frame consisting of 235,464 observations, with the following columns:
   \describe{

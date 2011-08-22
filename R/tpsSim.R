@@ -50,7 +50,8 @@ function(B=1000,
 	{
 		if(max(strata) > 0)
 		{
-			strataMat <- as.matrix(stratify(X, strata), ncol=1)
+			strataMat   <- as.matrix(stratify(X, strata), ncol=1)
+			strataNames <- names(X)[sort(strata)]
 
 			## Check that, if provided, the phase II counts are consistent with the (single) phase I stratification
 			##
@@ -88,6 +89,7 @@ function(B=1000,
 					strataMat <- cbind(strataMat, stratify(X, strata=temp[,j]))
 				}
 			}
+			strataNames <- names(X)[-1]
 		}
 	}
 	if(is.list(strata))
@@ -96,9 +98,10 @@ function(B=1000,
 		strataMat <- NULL
 		for(i in 1:length(strata))
 		{
-			strataLab <- c(strataLab, paste(strata[[i]], collapse="", sep=""))
+			strataLab <- c(strataLab, paste(strata[[i]], collapse=" ", sep=""))
 			strataMat <- cbind(strataMat, stratify(X, strata[[i]]))
-		}		
+		}
+	  strataNames <- names(X)[sort(unique(unlist(strata)))]
 	}
 	##
 	nStrat <- ncol(strataMat)
@@ -261,31 +264,33 @@ function(B=1000,
 	results  <- evalOC(betaTruth, betaHat, seHat, waldTest, keep, alpha=alpha, referent=referent, resNames=list(colNames, betaNames))
 	failed   <- B - matrix(apply(keep, 2, sum), ncol=1, dimnames=list(rownames(results$betaPower), ""))
 	
-	## Return object of class 'tpsPower'
+	## Return object of class 'tpsSim'
   ##
-  value           <- NULL
-  value$B         <- B
-  value$betaTruth <- betaTruth
-  value$X         <- X
-  value$N         <- N
-  value$strata    <- strata
-  value$nII0      <- nII0
-  value$nII1      <- nII1
-  value$nII       <- nII
-  value$nCC       <- nCC
-  value$alpha     <- alpha
-  value$threshold <- threshold
-	value$digits 	  <- digits
-	value$cohort    <- cohort
-	value$NI        <- NI
+  value             <- NULL
+  value$B           <- B
+  value$betaTruth   <- betaTruth
+  value$X           <- X
+  value$N           <- N
+  value$strata      <- strata
+  value$strataNames <- strataNames
+  value$nII0        <- nII0
+  value$nII1        <- nII1
+  value$nII         <- nII
+  value$nCC         <- nCC
+  value$alpha       <- alpha
+  value$threshold   <- threshold
+	value$digits 	    <- digits
+	value$cohort      <- cohort
+	value$NI          <- NI
   ##
-  value$failed    <- failed
-  value$results   <- results
+  value$failed      <- failed
+  value$results     <- results
   ##
   if(returnRaw == TRUE)
   {
-  	value$betaHat <- betaHat
-		value$seHat   <- seHat
+  	value$betaHat  <- betaHat
+		value$seHat    <- seHat
+		value$waldTest <- waldTest
   }
   class(value) <- "tpsSim"
   return(value)

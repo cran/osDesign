@@ -21,7 +21,10 @@ function(x,
   
   ##
   if(is.null(xAxis))
-  	xAxis <- x$nII
+  {
+  	if(class(x) == "ccPower") xAxis <- x$nCC
+  	if(class(x) == "tpsPower") xAxis <- x$nII
+  }
   if(is.null(main))
   	main <- paste("Power for", colnames(x$betaPower)[coefNum])
   	

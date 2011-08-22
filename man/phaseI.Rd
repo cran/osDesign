@@ -1,5 +1,5 @@
 \name{phaseI}
-\Rdversion{1.4}
+\Rdversion{1.5}
 \alias{phaseI}
 \title{
 Expected phase I stratification
@@ -55,7 +55,9 @@ phaseI(betaTruth, X, N, strata=NULL, expandX="all", etaTerms=NULL,
   The correspondence between \code{betaTruth} and \code{X}, specifically the ordering of elements, is based on successive use of \code{\link{factor}} to each column of \code{X} which is expanded via the \code{expandX} argument. Each exposure that is expanded must conform to a {0, 1, 2, ...} integer-based coding convention.
   
   The \code{etaTerms} argument is useful when only certain columns in \code{X} are to be included in the model. In the context of the two-phase design, this might be the case if phase I stratifies on some surrogate exposure and a more detailed/accurate measure is to be included in the main model.
-  
+}
+\references{
+Haneuse, S. and Saegusa, T. and Lumley, T. (2011) "osDesign: An R Package for the Analysis, Evaluation, and Design of Two-Phase and Case-Control Studies." Journal of Statistical Software, 43(11), 1-29.
 }
 \author{
   Sebastien Haneuse, Takumi Saegusa

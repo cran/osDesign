@@ -1,5 +1,5 @@
 \name{tpsSim}
-\Rdversion{1.4}
+\Rdversion{1.5}
 \alias{tpsSim}
 \title{
 Simulation function for two-phase study designs.
@@ -166,6 +166,7 @@ Also returned is an object \code{failed} which is a vector consisting of the num
 \references{
 Prentice, R. and Pyke, R. (1979) "Logistic disease incidence models and case-control studies." Biometrika 66:403-411.
 Breslow, N. and Chatterjee, N. (1999) "Design and analysis of two phase studies with binary outcome applied to Wilms tumour prognosis." Applied Statistics 48:457-468.
+Haneuse, S. and Saegusa, T. and Lumley, T. (2011) "osDesign: An R Package for the Analysis, Evaluation, and Design of Two-Phase and Case-Control Studies." Journal of Statistical Software, 43(11), 1-29.
 }
 \author{
   Sebastien Haneuse, Takumi Saegusa

@@ -10,16 +10,16 @@ function(x, ...)
   	{
 	  	cat("Phase I stratification variable(s):\n")
 	  	cat("\tAll combinations of\n")
-	  	for(i in 2:ncol(x$X)) cat("\t", i, ":", names(x$X)[i], "\n")
+	  	for(i in 1:length(x$strataNames)) cat("\t", i, ":", x$strataNames[i], "\n")
   	}
 	  if(max(x$strata) > 0)
-		  cat("Phase I stratification variable(s):", names(x$X)[x$strata], "\n")
+		  cat("Phase I stratification variable(s):", x$strataNames, "\n")
   }
   if(is.list(x$strata))
   {
   	cat("Phase I stratification variable(s):\n")
-  	
-	  for(i in unique(unlist(x$strata))) cat("\t", i, ":", names(x$X)[i], "\n")
+  	temp <- sort(unique(unlist(x$strata)))
+	  for(i in 1:length(temp)) cat("\t", temp[i], ":", x$strataNames[i], "\n")
   }
   ##
   if(is.null(x$NI))

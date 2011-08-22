@@ -20,11 +20,15 @@ function(B=1000,
 	if(problem != "")
 		stop(problem)
 
+	##
+	if(length(strata) == 1 & strata == 0)
+  	return("ERROR: tpsPower() only accommodates a single phase I stratification within given call. Multiple stratifications can be investigated using tpsSim().")
+
  	##
 	problem <- tpsChecks(X=X, strata=strata, nII=nII, cohort=cohort, NI=NI)
 	if(problem != "")
 		stop(problem)
-
+	
  	##
   if(is.null(colnames(X)))
   	colnames(X) <- c("Int", paste("V", 1:(ncol(X) - 1), sep = ""))
@@ -33,8 +37,9 @@ function(B=1000,
 
 	## Phase I stratification variable (prior to any restriction based on 'betaNames')
 	##
-	strata <- stratify(X, strata)
-	K      <- length(unique(strata))
+	strataNames <- names(X)[strata]
+	strata      <- stratify(X, strata)
+	K           <- length(unique(strata))
 
 	## Restrict design matrix to columns indicated in 'etaTerms'
 	##
@@ -177,20 +182,21 @@ function(B=1000,
 	
 	## Return object of class 'tpsPower'
   ##
-  value           <- NULL
-  value$B         <- B
-  value$betaTruth <- betaTruth
-  value$X         <- X
-  value$N         <- N
-  value$strata    <- strata
-  value$nII       <- nII
-  value$alpha     <- alpha
-	value$digits 	  <- digits
-	value$cohort    <- cohort
-	value$NI        <- NI
+  value             <- NULL
+  value$B           <- B
+  value$betaTruth   <- betaTruth
+  value$X           <- X
+  value$N           <- N
+  value$strata      <- strata
+  value$strataNames <- strataNames
+  value$nII         <- nII
+  value$alpha       <- alpha
+	value$digits 	    <- digits
+	value$cohort      <- cohort
+	value$NI          <- NI
   ##
-  value$failed    <- failed
-  value$betaPower <- results
+  value$failed      <- failed
+  value$betaPower   <- results
   ##
   class(value) <- "tpsPower"
   return(value)

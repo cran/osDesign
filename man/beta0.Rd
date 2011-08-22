@@ -1,5 +1,5 @@
 \name{beta0}
-\Rdversion{1.4}
+\Rdversion{1.5}
 \alias{beta0}
 \title{
   Calculate the intercept of a logistic regression model, given a vector of log-odds ratio parameters and an overall prevalence.
@@ -29,6 +29,9 @@ beta0(betaX, X, N, rhoY)
 }
 \value{
 	Numeric value of the intercept parameter in a logistic regression model. 
+}
+\references{
+Haneuse, S. and Saegusa, T. and Lumley, T. (2011) "osDesign: An R Package for the Analysis, Evaluation, and Design of Two-Phase and Case-Control Studies." Journal of Statistical Software, 43(11), 1-29.
 }
 \author{
   Sebastien Haneuse, Takumi Saegusa

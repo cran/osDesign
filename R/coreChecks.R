@@ -45,6 +45,9 @@ function(betaTruth,
 	Xtemp <- X
 	if(!is.null(etaTerms))
 	{
+		##
+		cat("\nWARNING: Make sure that the elements of 'etaTerms' are in the same order as those of 'betaTruth'\n\n")
+		##
 		if(sum(!is.element(etaTerms, colnames(X))) > 0)
 			return("* elements of 'etaTerms' are not in the design matrix 'X'")
 		Xtemp <- X[, is.element(colnames(X), etaTerms)]

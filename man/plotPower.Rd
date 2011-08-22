@@ -1,5 +1,5 @@
 \name{plotPower}
-\Rdversion{1.4}
+\Rdversion{1.5}
 \alias{plotPower}
 \title{
   Plot function for power, based on two-phase and case-control design
@@ -37,6 +37,9 @@ plotPower(x, coefNum=1, include="All", yAxis=seq(from=0, to=100, by=20),
 }
 \details{
 Produces a plot of statistical power (to reject a null hypothesis H0: beta = 0), for estimators of a regression coefficient from a logistic regression model, based on a two-phase and/or case-control design.
+}
+\references{
+Haneuse, S. and Saegusa, T. and Lumley, T. (2011) "osDesign: An R Package for the Analysis, Evaluation, and Design of Two-Phase and Case-Control Studies." Journal of Statistical Software, 43(11), 1-29.
 }
 \author{
   Sebastien Haneuse, Takumi Saegusa

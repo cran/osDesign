@@ -4,7 +4,7 @@ function(x, ...)
 	##
   cat("Number of simulations, B:",x$B,"\n")
   ##
-  cat("Phase I stratification variable(s):", names(x$X)[x$strata], "\n")
+  cat("Phase I stratification variable(s):", x$strataNames, "\n")
 	##
   if(is.null(x$NI))
     cat("Sample size at Phase I:", sum(x$N), "\n")

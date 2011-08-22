@@ -1,5 +1,5 @@
 \name{tpsPower}
-\Rdversion{1.4}
+\Rdversion{1.5}
 \alias{tpsPower}
 \title{
 	Simulation-based estimation of power for the two-phase study design
@@ -26,7 +26,7 @@ tpsPower(B=1000, betaTruth, X, N, strata, expandX="all", etaTerms=NULL,
     A numeric vector providing the sample size for each row of the design matrix, \code{X}.
   }
   \item{strata}{
-    A numeric vector indicating which columns of the design matrix, \code{X}, are used to form the phase I stratification variable. \code{strata=1} specifies the intercept and is, therefore, equivalent to a case-control study. \code{strata=0} indicates all possible stratified two-phase sampling schemes.
+    A numeric vector indicating which columns of the design matrix, \code{X}, are used to form the phase I stratification variable. \code{strata=1} specifies the intercept and is, therefore, equivalent to a case-control study. \code{strata=0} is not permitted in tpsPower(), although multiple two-phase stratifications can be investigated with tpsSim().
   }
   \item{expandX}{
     Character vector indicating which columns of \code{X} to expand as a series of dummy variables. Useful when at least one exposure is continuous (and should not be expanded). Default is `all'; other options include `none' or character vector of column names. See Details, below.
@@ -95,8 +95,9 @@ Only balanced designs are considered by \code{tpsPower()}. For unbalanced design
 	A generic plot function \code{\link{plotPower}} provides plots of powers against different sample sizes for each estimate of a regression coefficient.
 }
 \references{
-  Prentice, R. and Pyke, R. (1979) "Logistic disease incidence models and case-control studies." Biometrika 66:403-411.
-  Breslow, N. and Chatterjee, N. (1999) "Design and analysis of two phase studies with binary outcome applied to Wilms tumour prognosis." Applied Statistics 48:457-468.
+Prentice, R. and Pyke, R. (1979) "Logistic disease incidence models and case-control studies." Biometrika 66:403-411.
+Breslow, N. and Chatterjee, N. (1999) "Design and analysis of two phase studies with binary outcome applied to Wilms tumour prognosis." Applied Statistics 48:457-468.
+Haneuse, S. and Saegusa, T. and Lumley, T. (2011) "osDesign: An R Package for the Analysis, Evaluation, and Design of Two-Phase and Case-Control Studies." Journal of Statistical Software, 43(11), 1-29.
 }
 \author{
   Sebastien Haneuse, Takumi Saegusa
