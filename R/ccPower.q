@@ -1,5 +1,5 @@
-ccPower <-
-function(B=1000,
+##
+ccPower <- function(B=1000,
 										betaTruth,
 										X,
 										N,
@@ -62,7 +62,6 @@ function(B=1000,
   nDesigns <- 1 + length(nCC)
   p        <- length(betaTruth)
 	waldTest <- array(NA, dim=c(B, nDesigns, p))
-  cat(paste(nDesigns, "designs will be simulated\n"))
 	##
 	for(b in 1:B)
 	{
@@ -120,3 +119,29 @@ function(B=1000,
   class(value) <- "ccPower"
   return(value)
 }
+
+
+##
+print.ccPower <- function(x, ...)
+{
+	##
+  cat("Number of simulations, B:",x$B,"\n")
+  ##
+  cat("'True' regession coefficients, betaTruth:")
+  temp <- matrix(x$betaTruth, ncol=1)
+	rownames(temp) <- paste("  ", colnames(x$betaPower))
+	colnames(temp) <- ""
+	print(temp)
+	##
+	cat("\nPower\n")
+	print(round(x$betaPower, digits=x$digits))
+	##
+	if(max(x$failed) > 0)
+	{
+	  cat("\nNumber of failed repititions")
+		print(x$failed)
+	}
+  ##
+  invisible()
+}
+

@@ -1,5 +1,5 @@
-tpsPower <-
-function(B=1000,
+##
+tpsPower <- function(B=1000,
 										 betaTruth,
 										 X,
 										 N,
@@ -73,7 +73,6 @@ function(B=1000,
   nDesigns <- 1 + (4*lenII)                                      ## CD plus (CC, WL, PL, ML) for each value of NII
   p        <- length(betaTruth)
 	waldTest <- array(NA, dim=c(B, nDesigns, p))
-  cat(paste(1+(2*lenII), "designs will be simulated\n"))
 	##
 	for(b in 1:B)
 	{
@@ -89,7 +88,7 @@ function(B=1000,
 		waldTest[b,1,] <- (fitCD[,4] < alpha)
 		
 		##
-   	op <- options()
+   	#op <- options()
 		##
 		for(i in 1:lenII)
 		{
@@ -138,9 +137,9 @@ function(B=1000,
 
 			##
 			index <- 1 + i + (1*lenII)
-    	options(warn=-1)
-    	fitWL <- try(tps(formTPS, XexpII, nn0=nn0, nn1=nn1, XexpII$S, method="WL", cohort=cohort), silent=TRUE)
-    	options(op)
+    	#options(warn=-1)
+    	suppressWarnings(fitWL <- try(tps(formTPS, XexpII, nn0=nn0, nn1=nn1, XexpII$S, method="WL", cohort=cohort), silent=TRUE))
+    	#options(op)
 			if(class(fitWL)[1] == "tps")
 				waldTest[b,index,] <- abs(fitWL$coef/sqrt(diag(fitWL$cove))) > abs(qnorm(alpha/2))
 
@@ -204,3 +203,38 @@ function(B=1000,
   class(value) <- "tpsPower"
   return(value)
 }
+
+##
+print.tpsPower <- function(x, ...)
+{
+	##
+  cat("Number of simulations, B:",x$B,"\n")
+  ##
+  cat("Phase I stratification variable(s):", x$strataNames, "\n")
+	##
+  if(is.null(x$NI))
+    cat("Sample size at Phase I:", sum(x$N), "\n")
+  else
+  {
+    cat("Sample size at Phase I for controls:", x$NI[1], "\n")
+    cat("Sample size at Phase I for casess:", x$NI[2], "\n")
+  }
+  ##
+  cat("\n'True' regession coefficients, betaTruth:")
+  temp <- matrix(x$betaTruth, ncol=1)
+	rownames(temp) <- paste("  ", colnames(x$betaPower))
+	colnames(temp) <- ""
+	print(temp)
+	##
+	cat("\nPower\n")
+	print(round(x$betaPower, digits=x$digits))
+	##
+	if(max(x$failed) > 0)
+	{
+	  cat("\nNumber of failed repititions")
+		print(x$failed)
+	}
+	##
+  invisible()
+}
+

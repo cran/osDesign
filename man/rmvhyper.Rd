@@ -31,16 +31,14 @@ Sebastien Haneuse
 ##
 rmvhyper(c(1000, 500, 200, 50), 200)
 
-\dontrun{
 ## Check the properties (first two moments) of the generated deviates
 ##
 M  <- 100
 Qx <- c(0.7, 0.15, 0.1, 0.05)
-temp <- matrix(NA, nrow=100000, ncol=length(Qx))
+temp <- matrix(NA, nrow=10000, ncol=length(Qx))
 for(i in 1:nrow(temp)) temp[i,] <- rmvhyper(M*Qx, 1)
 
 ##
 rbind(Qx, apply(temp, 2,  mean))
 rbind(sqrt(Qx * (1-Qx)), apply(temp, 2, sd))
-}
 }

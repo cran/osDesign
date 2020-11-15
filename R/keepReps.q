@@ -1,5 +1,5 @@
-keepOC <-
-function(betaTruth,
+##
+keepOC <- function(betaTruth,
 									 betaHat,
 									 seHat,
 									 threshold=c(-Inf,Inf))

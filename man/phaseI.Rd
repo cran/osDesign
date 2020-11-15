@@ -56,6 +56,17 @@ phaseI(betaTruth, X, N, strata=NULL, expandX="all", etaTerms=NULL,
   
   The \code{etaTerms} argument is useful when only certain columns in \code{X} are to be included in the model. In the context of the two-phase design, this might be the case if phase I stratifies on some surrogate exposure and a more detailed/accurate measure is to be included in the main model.
 }
+\value{
+	\code{phaseI()} returns an object of class "phaseI" that, at a minimum includes:
+	\item{phaseI}{Expected phase I counts, based on a pre-specified population and outcome model}
+	\item{covm}{Model based variance-covariance matrix. This is available for \code{method} = "PL" and "ML".}
+	\item{cove}{Empirical variance-covariance matrix. This is available for all the three methods.}
+	\item{fail}{Indicator of whether or not the phase I and/or the phase II constraints are satisfied; only relevant for the ML estimator.}
+	
+		If phase II sample sizes were provided as part of the initial call, the object additionally includes:
+	\item{phaseII}{The supplied phase II sample sizes.}
+	\item{phaseIIprobs}{Expected phase II sampling probabilities.}
+}
 \references{
 Haneuse, S. and Saegusa, T. and Lumley, T. (2011) "osDesign: An R Package for the Analysis, Evaluation, and Design of Two-Phase and Case-Control Studies." Journal of Statistical Software, 43(11), 1-29.
 }

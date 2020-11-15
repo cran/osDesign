@@ -84,7 +84,7 @@ NOTE: In some settings, the current implementation of the ML estimator returns p
 
 }
 \value{
-  \code{tpsPower()} returns an object of class "tpsPower", a list containing all the input arguments, as well as the following components:
+  \code{tpsPower()} returns an object of class 'tpsPower', a list containing all the input arguments, as well as the following components:
     \item{betaPower}{
     	Power against the null hypothesis that the regression coefficient is zero for a Wald-based test with an \code{alpha} type I error rate.
     }
@@ -122,7 +122,7 @@ betaNamesM <- c("Int", "Age1", "Age2", "Sex", "Race")
 
 ## Power for the TPS design where phase I stratification is based on Race.
 ##
-\dontrun{
+\donttest{
 tpsResult1 <- tpsPower(B=1000, beta=fitM$coef, X=XM, N=Ohio$N, strata=4,
                        nII=seq(from=100, to=1000, by=100),
                        betaNames=betaNamesM, monitor=100)
@@ -138,7 +138,7 @@ newBetaM[2:3] <- newBetaM[2:3] / 2
 newBetaM[1]   <- beta0(betaX=newBetaM[-1], X=XM, N=Ohio$N,
                        rhoY=sum(Ohio$Death)/sum(Ohio$N))
 ##
-\dontrun{
+\donttest{
 tpsResult2 <- tpsPower(B=1000, beta=fitM$coef, X=XM, N=Ohio$N, strata=2,
                        nII=seq(from=100, to=500, by=50),
                        betaNames=betaNamesM, monitor=100)

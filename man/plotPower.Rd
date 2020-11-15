@@ -62,12 +62,13 @@ betaNamesM <- c("Int", "Age1", "Age2", "Sex", "Race")
 newBetaM      <- fitM$coef
 newBetaM[2:3] <- newBetaM[2:3] / 2
 ##
-\dontrun{
+\donttest{
 powerRaceTPS <- tpsPower(B=10000, betaTruth=fitM$coef, X=XM, N=Ohio$N,
                     strata=4,
                     nII=seq(from=100, to=1000, by=100),
 		 betaNames=c("Int", "Age1", "Age2", "Sex", "Race"), monitor=1000)
 ##
+old.par <- par()
 par(mfrow=c(2,2))
 plotPower(powerRaceTPS, include="TPS", coefNum=2,
           xAxis=seq(from=100, to=1000, by=100),
@@ -84,11 +85,13 @@ plotPower(powerRaceTPS, include="WL", coefNum=2,
 plotPower(powerRaceTPS, include="CC", coefNum=2,
           xAxis=seq(from=100, to=1000, by=100),
           main=expression("Age effect (65-74 vs. 55-64 years), " * beta[A1]),
-          legendXY=c(800, 65))}
+          legendXY=c(800, 65))
+##
+par(old.par)}
 
 ## Power 
 ##
-\dontrun{
+\donttest{
 ccResult <- ccPower(B=1000, betaTruth=newBetaM, X=XM, N=Ohio$N, r=0.5,
                     nCC=seq(from=100, to=500, by=50), betaNames=betaNamesM,
                     monitor=100)

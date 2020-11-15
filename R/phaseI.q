@@ -1,5 +1,5 @@
-phaseI <-
-function(betaTruth,
+##
+phaseI <- function(betaTruth,
 									 X,
 									 N,
 									 strata=NULL,
@@ -74,10 +74,11 @@ function(betaTruth,
   for(i in 1:nrow(phaseI))
   	rownames(phaseI)[i] <- paste(colnames(phaseI)[length(strata):1], "=", phaseI[i, 1:length(strata)], " ", collapse = " ")
   phaseI <- round(phaseI[,-c(1:length(strata))])
-	##
-	cat("Expected Phase I counts:\n")
-	print(phaseI)	
  
+  ##
+  value        <- NULL
+  value$phaseI <- phaseI
+  
   ##
   if(!is.null(nII0) && !is.null(nII1))
   {
@@ -110,12 +111,38 @@ function(betaTruth,
 		phaseIIprob <- round(phaseIIprob, digits=digits)
 		
 		##
-		cat("\nPhase II sample size:\n")
-		print(phaseII)
-		cat("\nExpected Phase II sampling probabilities:\n")
-		print(phaseIIprob)
+		value$phaseII     <- phaseII
+		value$phaseIIprob <-phaseIIprob 
   }
-  	
+
+	## Return object of class 'phaseI'
+	##
+	class(value) <- "phaseI"
+	
+  ##
+  return(value)
+}
+
+##
+print.phaseI <- function(x, ...)
+{
+  ##
+  cat("Expected Phase I counts:\n")
+  print(x$phaseI)	
+
+  ##
+  if(length(x) > 1)
+  {
+    ##
+    cat("\nPhase II sample size:\n")
+    print(x$phaseII)
+    ##
+    cat("\nExpected Phase II sampling probabilities:\n")
+    print(x$phaseIIprob)
+  }
+
   ##
   invisible()
 }
+
+

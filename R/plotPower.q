@@ -1,5 +1,5 @@
-plotPower <-
-function(x,
+##
+plotPower <- function(x,
 											coefNum=1,
 											include="All",
 											yAxis=seq(from=0, to=100, by=20),

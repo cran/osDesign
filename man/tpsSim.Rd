@@ -110,11 +110,11 @@ characteristics of various designs/estimators for \code{betaTruth}:
   
   When evaluating operating characteristics, some simulated datasets may result in unusually large or small estimates. Particularly, when the the case-control/phase II sample sizes are small. In some settings, it may be desirable to truncate the Monte Carlo sampling distribution prior to evaluating operating characteristics. The \code{threshold} argument indicates the interval beyond which point estimates are ignored. The default is such that all \code{B} datasets are kept.
 
-NOTE: In some settings, the current implementation of the ML estimator returns point estimates that do not satisfy the phase I and/or phase II constraints. If this is the case a warning is printed and the "fail" elements of the returned list is set to TRUE. An example of this is phenomenon is given the help file for \code{\link{tps}}. When this occurs, \code{tpsSim()} considers ML estimation for the particular dataset to have failed.
+NOTE: In some settings, the current implementation of the ML estimator returns point estimates that do not satisfy the phase I and/or phase II constraints. If this is the case a warning is printed and the 'fail' elements of the returned list is set to TRUE. An example of this is phenomenon is given the help file for \code{\link{tps}}. When this occurs, \code{tpsSim()} considers ML estimation for the particular dataset to have failed.
 
 }
 \value{
-  \code{tpsSim()} returns an object of class "tpsSim", a list containing all the input arguments, as well list \code{results} with the following components:
+  \code{tpsSim()} returns an object of class 'tpsSim', a list containing all the input arguments, as well list \code{results} with the following components:
     \item{betaMean}{
     	Mean of the Monte Carlo sampling distribution for each regression coefficient estimator.
     }
@@ -199,7 +199,7 @@ betaNamesI <- c("Int", "Age1", "Age2", "Sex", "Race", "SexRace")
 ##   * sample 50 from each of 6 phase I strata
 ##   * show primary output (% bias, 95% CP, relative uncertainty)
 ##
-\dontrun{
+\donttest{
 ocAge <- tpsSim(B=1000, betaTruth=fitM$coef, X=XM, N=Ohio$N, strata=2,
                 nII0=c(50,50,50), nII1=c(50,50,50), betaNames=betaNamesM,
                 monitor=100)
@@ -209,16 +209,17 @@ ocAge}
 ##  * 250 controls and 250 cases
 ##  * only show the relative uncertainty output
 ##
-\dontrun{
+\donttest{
 ocAll <- tpsSim(B=1000, betaTruth=fitM$coef, X=XM, N=Ohio$N, strata=0,
-                nII=c(250, 250), betaNames=betaNamesM, monitor=100)
+                nII=c(250, 250), betaNames=betaNamesM,
+                monitor=100)
 ocAll}
 
 ## Two-phase design stratified by race
 ##  * balanced solely on outcome
 ##  * only show the relative uncertainty output
 ##
-\dontrun{
+\donttest{
 ocRace <- tpsSim(B=1000, betaTruth=fitI$coef, X=XI, N=Ohio$N, strata=4,
                  nII0=c(200, 50), nII1=c(200, 50), betaNames=betaNamesI,
                  monitor=100)
@@ -229,23 +230,25 @@ ocRace}
 ##  * 240 controls and 260 cases
 ##  * only show the relative uncertainty output
 ##
-\dontrun{
+\donttest{
 ocCC <- tpsSim(B=1000, betaTruth=fitM$coef, X=XM, N=Ohio$N, strata=1,
-               nII0=240, nII1= 260, ccDesign=c(200,300),
-               betaNames=betaNamesM, monitor=100)
+               nII0=240, nII1= 260, nCC=c(200,300),
+               betaNames=betaNamesM,
+               monitor=100)
 ocCC}
 
 ## Illustration of setting where one of the covariates is continuous
 ##  * restrict to black and white children born in 2003
 ##  * dichotomize smoking, mothers age, weight gain during pregnancy and weight weight
-##  * note the use of 'etaTerms' to restrict to specific variables 
-##    (the majority of which are created)
+##  * note the use of 'etaTerms' to restrict to specific variables (the majority of which
+##    are created)
 ##  * note the use of 'strata=list(11,12)' to simultaneously investigate stratification by
 ##     - 11th column in XM: derived 'smoker' variable
 ##     - 12th column in XM: derived 'teen' variable
 ##
 ## Warning: takes a long time!
-\dontrun{
+##
+\donttest{
 data(infants)
 ##
 infants <- infants[infants$year == 2003,]
@@ -258,16 +261,18 @@ infants$smoker  <- as.numeric(infants$cignum > 0)
 infants$teen    <- as.numeric(infants$mage < 20)
 infants$lowgain <- as.numeric(infants$gained < 20)
 infants$lbw     <- as.numeric(infants$weight < 2500)
-infants$weeks   <- (infants$weeks - 36) / 4              ## estimate a 4-week contrast
+infants$weeks   <- (infants$weeks - 36) / 4       ## estimate a 4-week contrast
 ##
-fitM  <- glm(death ~ smoker + teen + race + male + lowgain + lbw + weeks, 
-data=infants, family=binomial)
+fitM  <- glm(death ~ smoker + teen + race + male+ lowgain + lbw + weeks,
+             data=infants,
+             family=binomial)
 betaM <- fitM$coef
 XM    <- cbind(Int=1, infants)
 etaM  <- c("Int", "smoker", "teen", "race", "male", "lowgain", "lbw", "weeks")
 ##
 tpsSim(B=1000, betaTruth=fitM$coef, X=XM, N=rep(1, nrow(XM)), strata=list(11,12),
        expand="none", etaTerms=etaM, nII=c(1000,1000),
-       threshold=c(-20,20), monitor=100)}
+       threshold=c(-20,20),
+       monitor=100)}
 }
 

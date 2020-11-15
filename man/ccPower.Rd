@@ -96,17 +96,17 @@ betaNamesM <- c("Int", "Age1", "Age2", "Sex", "Race")
 
 ## Power for a single CC design
 ##
-\dontrun{
-ccResult1 <- ccPower(B=1000, betaTruth=fitM$coef, X=XM, N=Ohio$N, r=1,
-                     nCC=500, betaNames=betaNamesM)
-ccResult1}
+ccResult1 <- ccPower(B=100, betaTruth=fitM$coef, X=XM, N=Ohio$N, r=1,
+                     nCC=500, betaNames=betaNamesM, monitor=10)
+ccResult1
 
 ## Power for the CC design, based on a balanced design with 
 ## various sample sizes
 ##
-\dontrun{
+\donttest{
 ccResult2 <- ccPower(B=1000, betaTruth=fitM$coef, X=XM, N=Ohio$N, r=1,
-                     nCC=seq(from=100, to=500, by=50), betaNames=betaNamesM)
+                     nCC=seq(from=100, to=500, by=50),
+                     betaNames=betaNamesM, monitor=100)
 ccResult2}
 
 ## Recalculate power for the setting where the age coefficients are
@@ -118,10 +118,11 @@ newBetaM[2:3] <- newBetaM[2:3] / 2
 newBetaM[1]   <- beta0(betaX=newBetaM[-1], X=XM, N=Ohio$N,
 rhoY=sum(Ohio$Death)/sum(Ohio$N))
 ##
-\dontrun{
+\donttest{
 ccResult3 <- ccPower(B=1000, betaTruth=newBetaM, X=XM, N=Ohio$N,
                      r=1, nCC=seq(from=100, to=500, by=50),
-                     betaNames=betaNamesM)
+                     betaNames=betaNamesM,
+                     monitor=100)
 ccResult3}
 }
 

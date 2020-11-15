@@ -1,5 +1,5 @@
 \name{tps}
-\Rdversion{1.7}
+\Rdversion{2.0}
 \alias{tps}
 \title{
 	Estimation for two-phase designs.
@@ -8,7 +8,7 @@
 Fits a logistic regression model to data arising from two phase designs
 }
 \usage{
-tps(formula=formula(data), data=sys.parent(), nn0, nn1, group,
+tps(formula=formula(data), data=parent.frame(), nn0, nn1, group,
     contrasts=NULL, method="PL", cohort=TRUE, alpha=1)
 }
 \arguments{
@@ -59,7 +59,7 @@ researchers. The estimate is obtained by fitting a logistic regression model to 
 the data (phase I and II) jointly with respect to the regression parameters and the marginal distribution of the covariates. The resulting concentrated score equations
 (Breslow and Holubkov (1997) , eq. 18) were solved using a modified Newton-Raphson algorithm. Schill's (1993) partial likelihood estimates are used as the starting values.
 
-NOTE: In some settings, the current implementation of the ML estimator returns point estimates that do not satisfy the phase I and/or phase II constraints. If this is the case a warning is printed and the "fail" elements of the returned list is set to TRUE. An example of this is phenomenon is given below. When this occurs, users are encouraged to either report the PL estimator or consider using Chris Wild's "missreg" package.
+NOTE: In some settings, the current implementation of the ML estimator returns point estimates that do not satisfy the phase I and/or phase II constraints. If this is the case a warning is printed and the "fail" elements of the returned list is set to TRUE. An example of this is phenomenon is given below. When this occurs, users are encouraged to either report the PL estimator or consider using Chris Wild's 'missreg' package.
 
 }
 \value{
@@ -123,16 +123,20 @@ for(k in 1:K)
 
 ## Three estimators
 ##
-tps(cbind(cases, conts) ~ factor(Age) + Sex + Race, data=Ohio, nn0=nn0,
-    nn1=nn1, group=Ohio$S, method="WL")
-tps(cbind(cases, conts) ~ factor(Age) + Sex + Race, data=Ohio, nn0=nn0,
-    nn1=nn1, group=Ohio$S, method="PL")
-tps(cbind(cases, conts) ~ factor(Age) + Sex + Race, data=Ohio, nn0=nn0,
-    nn1=nn1, group=Ohio$S, method="ML")
+tps(cbind(cases, conts) ~ factor(Age) + Sex + Race, data=Ohio,
+    nn0=nn0, nn1=nn1,
+    group=Ohio$S, method="WL")
+tps(cbind(cases, conts) ~ factor(Age) + Sex + Race, data=Ohio,
+    nn0=nn0, nn1=nn1,
+    group=Ohio$S, method="PL")
+tps(cbind(cases, conts) ~ factor(Age) + Sex + Race, data=Ohio,
+    nn0=nn0, nn1=nn1,
+    group=Ohio$S, method="ML")
 
 ## An example where (most of the time) the constraints are not satisfied and a warning is returned
 ##
-tps(cbind(cases, conts) ~ Sex + Race, data=Ohio, nn0=nn0,
-    nn1=nn1, group=Ohio$S, method="ML")
+tps(cbind(cases, conts) ~ Sex + Race, data=Ohio,
+    nn0=nn0, nn1=nn1,
+    group=Ohio$S, method="ML")
 }
 

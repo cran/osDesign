@@ -156,14 +156,13 @@ betaNamesM <- c("Int", "Age1", "Age2", "Sex", "Race")
 
 ## Single case-control design
 ##
-\dontrun{
-ccResults1 <- ccSim(B=1000, betaTruth=fitM$coef, X=XM, N=Ohio$N,
-                    nCC=500, r=1, betaNames=betaNamesM, monitor=100)
-ccResults1}
+ccResults1 <- ccSim(B=100, betaTruth=fitM$coef, X=XM, N=Ohio$N,
+                    nCC=500, r=1, betaNames=betaNamesM, monitor=10)
+ccResults1
 
 ## Examining unbalanced case-control designs
 ##
-\dontrun{
+\donttest{
 ccResults2 <- ccSim(B=1000, betaTruth=fitM$coef, X=XM, N=Ohio$N,
                     nCC=500, r=c(0.25, 0.33, 0.5, 1, 2, 3, 4),
                     betaNames=betaNamesM, monitor=100)
